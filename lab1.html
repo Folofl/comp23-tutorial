@@ -1,0 +1,78 @@
+<!doctype html> 
+
+<!-- 
+        lab1.html
+ By:           Alena Borisenko
+ Last Edit:    Sept 22, 2015
+ Notes:        Outline copied from part1.html
+-->
+
+<html lang="en"> 
+<head> 
+        <meta charset="UTF-8" />
+        <title>Lab 1: Phaser Tutorial</title>
+        <script type="text/javascript" src="js/phaser.min.js"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+<script type="text/javascript">
+
+var boundsX = 800, boundsY = 600;
+
+var game = new Phaser.Game(boundsX, boundsY, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+
+function preload() {
+
+    game.load.image('sky', 'assets/sky.png');
+    game.load.image('ground', 'assets/platform.png');
+    game.load.image('star', 'assets/star.png');
+    game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
+
+}
+
+var platforms;
+
+function create() {
+
+    // enable Arcade Physics
+    game.physics.startSystem(Phaser.Physics.ARCADE);
+
+    // background (using sky image as a "sprite")
+    game.add.sprite(0, 0, 'sky');
+
+    // add platforms group to the game
+    platforms = game.add.group();
+
+    // enable physics for all objects created in the group
+    platforms.enableBody = true;
+
+    // create the ground
+    var ground = platforms.create(0, game.world.height - 64, 'ground');
+
+    // stretch the sprite to needed width
+    ground.scale.setTo(2, 2);
+
+    // keeps ground in place
+    ground.body.immovable = true;
+
+    // create two ledges
+    var ledge = platforms.create(400, 400, 'ground');
+
+    ledge.body.immovable = true;
+    ledge = platforms.create(-150, 250, 'ground');
+    ledge.body.immovable = true;
+
+}
+
+function update() {
+}
+
+</script>
+
+</body>
+</html>
