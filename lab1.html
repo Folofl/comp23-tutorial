@@ -81,13 +81,15 @@ function create() {
     player.body.collideWorldBounds = true;
 
     // walking animations
-    // animation frames contained in sprite sheet 
+    // animation frames contained in sprite sheet  
     player.animations.add('left', [0, 1, 2, 3], 10, true);
     player.animations.add('right', [5, 6, 7, 8], 10, true);
 
 }
 
 function update() {
+    // collide player with platforms
+    game.physics.arcade.collide(player, platforms);
 }
 
 </script>
