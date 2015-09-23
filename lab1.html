@@ -37,6 +37,9 @@ function preload() {
 
 var platforms;
 
+var score = 0;
+var scoreText;
+
 function create() {
 
     // enable Arcade Physics
@@ -77,7 +80,7 @@ function create() {
 
     // make character bounce
     player.body.bounce.y = 0.2;
-    player.body.gravity.y = 300;
+    player.body.gravity.y = 350;
     player.body.collideWorldBounds = true;
 
     // walking animations
@@ -99,17 +102,21 @@ function create() {
         var star = stars.create(i * 70, 0, 'star');
 
         // set gravity
-        star.body.gravity.y = 6;
+        star.body.gravity.y = 400;
 
         // give the star a slightly random bounce value
         // bounce is a value between 0 and 1, here we use 0.7-0.9
         star.body.bounce.y = 0.7 + Math.random() * 0.2;
     }
 
+    // text will be displayed at 16x16 coordinate. 'score: 0' is the default string
+    // since font is not specified, browser default font is used 
+    scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000'});
 
 }
 
 function update() {
+
     // collide player with platforms
     game.physics.arcade.collide(player, platforms);
 
@@ -138,13 +145,18 @@ function update() {
 
     // allow jump if character is touching the floor
     if (cursors.up.isDown && player.body.touching.down) {
-        player.body.velocity.y = -350;
+        player.body.velocity.y = -400;
     }
 }
 
 function collectStar (player, star) {
+
     // removes star if it is collected
     star.kill();
+
+    // update the score, 10 pts per star
+    score += 10;
+    scoreText.text = 'Score: ' + score;
 }
 
 </script>
